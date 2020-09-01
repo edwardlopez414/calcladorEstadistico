@@ -1,0 +1,47 @@
+package calculadorstadistico;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class TablafrecuenciaNumerica {
+	
+	static ArrayList<Integer>Dnumericos = new ArrayList<Integer>();
+	
+public static void main(String args[]) {
+	
+	int limitante;
+	
+	int addnumero;
+	
+	String salida = "";
+	
+	ArrayList<Integer>Dnumericos = new ArrayList<Integer>();
+	
+	try {
+    limitante = Integer.parseInt(JOptionPane.showInputDialog("Dijite el tamaño de la tabla"));
+	}catch(NumberFormatException ex) {
+		limitante = 0;
+	}
+	
+	for(int i = 0; i < limitante; i++) {
+		try {
+		      addnumero = Integer.parseInt(JOptionPane.showInputDialog("digite el termino:"+(i+1)));
+		    } catch( NumberFormatException ex ) {
+		    	
+			        addnumero = 0;
+		}Dnumericos.add( addnumero );
+		
+	}
+	
+	Collections.sort(Dnumericos);
+	for(int i: Dnumericos) {
+		salida += i+"\n";
+	}
+	
+	JOptionPane.showMessageDialog(null, salida);
+}
+
+public void Calculos_De_tabla() {}
+
+}
