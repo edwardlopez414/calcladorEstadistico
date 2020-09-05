@@ -9,7 +9,11 @@ public class TablafrecuenciaNumerica {
 	static ArrayList<Integer>Dnumericos = new ArrayList<Integer>();
 	
 public static void main(String args[]) {
-	
+	//implementaciona del calculo  del rago y la amplitud
+	int mayor=0,menor=0;//kenny
+        int salida1=0 ;//kenny
+         float salida2=0f;//kenny
+	 //-.....................
 	int limitante;
 	
 	int addnumero;
@@ -30,6 +34,10 @@ public static void main(String args[]) {
 		try {   do {
 		
 		      addnumero = Integer.parseInt(JOptionPane.showInputDialog("digite el termino:"+(i+1)));
+		      
+		      
+		       mayor=menor=addnumero;//kenny
+		      
 		      }while((addnumero<=0 || addnumero >100));
 		    } catch( NumberFormatException ex ) {
 		    	
@@ -40,10 +48,24 @@ public static void main(String args[]) {
 	
 	Collections.sort(Dnumericos);
 	for(int i: Dnumericos) {
+	
+	  if(menor >i){
+                menor=i;
+            }
+               
+            if(i > mayor){
+                
+                mayor=i;
+                   
+            }
+         salida1=menor - mayor;//kenny
+         salida2=salida1/ limitante;//kenny
+         
 		salida += i+"\n";
 	}
 	
 	JOptionPane.showMessageDialog(null, salida);
+	JOptionPane.showMessageDialog(null, salida +"\n" +"Rango: "+ salida1+"\n"+"Amplitud: "+ (String.format("%.3f", salida2)));//kenny
 }
 
 public void Calculos_De_tabla() {}
