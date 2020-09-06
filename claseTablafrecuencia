@@ -68,6 +68,25 @@ public static void main(String args[]) {
 	JOptionPane.showMessageDialog(null, salida +"\n" +"Rango: "+ salida1+"\n"+"Amplitud: "+ (String.format("%.3f", salida2)));//kenny
 }
 
-public void Calculos_De_tabla() {}
+public void Calculos_De_tabla() 
+  //ESTE CODIGO COLIN  SE UTLIZA PARA VERIFICAR  LOS NUMERO QUE SE REPITEN , PERO NO PUEDE IMPLEMENTARLO EN EL CODIGO DONDE PEDIS LOS DATOS TALVEZ PODAS VOS....ME AVISAS CUALQUIER PEDO
+  long n;
+  
+        n = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el numero"));
+        String num = String.valueOf(n);
+        for(int d = 0; d < 10; d++) {
+            int rep = 0;
+            for(int i = 0; i < num.length(); i++) {
+                if(Integer.valueOf(String.valueOf(num.charAt(i))) == d) {
+                    rep++;
+                }
+            }
+            if(rep > 0) {
+                System.out.println( String.format("El número %d se repite %d %s", d, rep, (rep == 1 ? "vez" : "veces"))
+                );
+            }
+        }
+
+       
 
 }
