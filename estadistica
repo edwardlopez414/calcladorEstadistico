@@ -1,0 +1,425 @@
+import javax.swing.*;
+import javax.swing.border.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class claseTablafrecuencia extends JFrame implements ActionListener{
+
+                JPanel paneldatos, paneldatosarriba, paneldatosabajo, paneldatoscentro,paneldatoscentroi, paneldatoscentroc, paneldatoscentrod, panelcalculos;
+                JLabel lbldato, lblmedia, lblmoda, lblmediana, lblcuartil1, lblcuartil3, lbldtipica, lblvarianza;
+                JTextField txtdato, txtmedia, txtmoda, txtmediana, txtcuartil1, txtcuartil3, txtdtipica, txtvarianza;
+                JButton btnagregar, btnup, btndown, btnquitar, btnlimpiar, btnordenar, btncalcular;
+                JList lista;
+                JScrollPane desliza;
+                DefaultListModel modelo;
+                Dimension d;
+                              
+                public claseTablafrecuencia(){
+                               //Inicializando el JFRAME con los valores deseados
+                               super("Probabilidad & Estadistica");
+                               this.setLayout(new GridLayout(1,2,15,15));
+                               this.setVisible(true);
+                               this.setSize(1000,300);
+                               this.setLocationRelativeTo(null);
+                               this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                              
+                               //Creando los paneles principales
+                               paneldatos=new JPanel(new BorderLayout());
+                               paneldatos.setBorder(new TitledBorder("Datos"));
+                               panelcalculos=new JPanel(new GridLayout(7,2,10,10));
+                               panelcalculos.setBorder(new TitledBorder("Calculos"));
+                              
+                               //Creando los paneles secundarios
+                               paneldatosarriba=new JPanel(new FlowLayout());
+                               paneldatosabajo=new JPanel(new FlowLayout());
+                               paneldatoscentro=new JPanel(new FlowLayout());
+                               paneldatoscentroi=new JPanel(new GridLayout(2,1,5,5));
+                               paneldatoscentroc=new JPanel();
+                               paneldatoscentrod=new JPanel(new GridLayout(2,1,5,5));
+                              
+                               //Agregando objetos a paneldatosarriba
+                               lbldato=new JLabel("Dato");
+                               txtdato=new JTextField(10);
+                               btnagregar=new JButton("Agregar");
+                               paneldatosarriba.add(lbldato);
+                               paneldatosarriba.add(txtdato);
+                               paneldatosarriba.add(btnagregar);
+                              
+                               //Agregando objetos a paneldatoscentro
+                               btnup=new JButton("Arriba");
+                               btndown=new JButton("Abajo");
+                               paneldatoscentroi.add(btnup);
+                               paneldatoscentroi.add(btndown);
+                              
+                               lista=new JList();
+                               modelo=new DefaultListModel();
+                               lista.setModel(modelo);
+                               d=new Dimension(150,300);
+                               lista.setPreferredSize(d);
+                               desliza=new JScrollPane(lista);
+                               paneldatoscentroc.add(desliza);
+                              
+                               btnquitar=new JButton("Quitar");
+                               btnlimpiar=new JButton("Limpiar");
+                               paneldatoscentrod.add(btnquitar);
+                               paneldatoscentrod.add(btnlimpiar);
+                              
+                               //Agregando objetos a paneldatosabajo
+                               btnordenar=new JButton("Ordenar");
+                               btncalcular=new JButton("Calcular");
+                               paneldatosabajo.add(btnordenar);
+                               paneldatosabajo.add(btncalcular);
+                              
+                               //Agregando objetos a panelcalculos
+                               lblmedia=new JLabel("Media");
+                               lblmoda=new JLabel("Moda");
+                               lblmediana=new JLabel("Mediana");
+                                lblcuartil1=new JLabel("Cuartil 1");
+                               lblcuartil3=new JLabel("Cuartil 3");
+                               lbldtipica=new JLabel("Desviacion Tipica");
+                               lblvarianza=new JLabel("Varianza");
+                               txtmedia=new JTextField(15);
+                               txtmoda=new JTextField(15);
+                               txtmediana=new JTextField(15);
+                                txtcuartil1=new JTextField(15);
+                               txtcuartil3=new JTextField(15);
+                               txtdtipica=new JTextField(15);
+                               txtvarianza=new JTextField(15);
+                               panelcalculos.add(lblmedia);
+                               panelcalculos.add(txtmedia);
+                               panelcalculos.add(lblmoda);
+                               panelcalculos.add(txtmoda);
+                               panelcalculos.add(lblmediana);
+                               panelcalculos.add(txtmediana);
+                               panelcalculos.add(lblcuartil1);
+                               panelcalculos.add(txtcuartil1);
+                               panelcalculos.add(lblcuartil3);
+                               panelcalculos.add(txtcuartil3);
+                               panelcalculos.add(lbldtipica);
+                               panelcalculos.add(txtdtipica);
+                               panelcalculos.add(lblvarianza);
+                               panelcalculos.add(txtvarianza);
+                                                                                             
+                               //Agregando los paneles
+                               paneldatoscentro.add(paneldatoscentroi, FlowLayout.LEFT);
+                               paneldatoscentro.add(paneldatoscentroc, FlowLayout.CENTER);
+
+ 
+                               paneldatoscentro.add(paneldatoscentrod, FlowLayout.RIGHT);
+
+ 
+                               paneldatos.add(paneldatosarriba, BorderLayout.NORTH);
+                               paneldatos.add(paneldatoscentro, BorderLayout.CENTER);
+                               paneldatos.add(paneldatosabajo, BorderLayout.SOUTH);
+                               this.add(paneldatos);
+                               this.add(panelcalculos);
+                              
+                               //Agregando eventos
+                               btnagregar.addActionListener(this);
+                               btnquitar.addActionListener(this);
+                               btnlimpiar.addActionListener(this);
+                               btnup.addActionListener(this);
+                               btndown.addActionListener(this);
+                               btnordenar.addActionListener(this);
+                               btncalcular.addActionListener(this);                     
+                              
+                }
+
+                public void actionPerformed(ActionEvent e){
+                               if(e.getActionCommand().equals(btnagregar.getText())){
+                                               Agregarobjeto();
+                               }
+                               if(e.getActionCommand().equals(btnquitar.getText())){
+                                               Quitar();
+                               }
+                               if(e.getActionCommand().equals(btnlimpiar.getText())){
+                                               Limpiar();
+                               }
+                               if(e.getActionCommand().equals(btnup.getText())){
+                                               Up();
+                               }
+                               if(e.getActionCommand().equals(btndown.getText())){
+                                               Down();
+                               }
+                               if(e.getActionCommand().equals(btnordenar.getText())){
+                                               Ordenar();
+                               }
+                               if(e.getActionCommand().equals(btncalcular.getText())){
+                                               //Agregando la instancia de la clase Calcular, la cual realiza las operaciones
+                                               Calcular totales=new Calcular();
+                                               totales.Media();
+                                               totales.Moda();
+                                               totales.Mediana();
+                                               totales.Cuartil1();
+                                               totales.Cuartil3();
+                                               totales.DesviacionTipica();
+                                               totales.Varianza();
+                               }
+                }
+               
+                //METODOS PARA LOS BOTONES
+                //Metodo Agregar: Agrega el dato del txtdato al JList
+                public void Agregarobjeto(){
+                               modelo.addElement(txtdato.getText());
+                               txtdato.setText("");                     
+                }
+               
+                //Metodo Quitar: Elimina el elemento seleccionado del JList
+                public void Quitar(){
+                               int seleccion;
+                               seleccion=lista.getSelectedIndex();
+                               modelo.removeElementAt(seleccion);
+                }
+
+                //Metodo Limpiar: Elimina todos los elementos del Jlist
+                public void Limpiar(){
+                               modelo.removeAllElements();
+                               txtmedia.setText("");
+                               txtmoda.setText("");
+                               txtmediana.setText("");
+                               txtcuartil1.setText("");
+                               txtcuartil3.setText("");
+                               txtdtipica.setText("");
+                               txtvarianza.setText("");
+                }
+               
+                //Metodo Up: Mueve el objeto seleccionado hacia arriba
+                public void Up(){
+                               int subir,bajar;
+                               Object up, down;
+                               subir=lista.getSelectedIndex()-1;
+                               bajar=lista.getSelectedIndex();
+                               if(subir<0){
+                                               JOptionPane.showMessageDialog(this,"No se puede mover hacia arriba porque es el primer elemento","Atencion!!!",JOptionPane.INFORMATION_MESSAGE);
+                               }else{
+                               up=modelo.getElementAt(bajar);
+                               down=modelo.getElementAt(subir);
+                               modelo.setElementAt(up,subir);
+                               modelo.setElementAt(down,bajar);
+                               lista.setSelectedIndex(subir);
+                               }
+                }
+               
+                //Metodo Down: Mueve el objeto seleccionado hacia abajo
+                public void Down(){
+                               int subir, bajar;
+                               Object up,down;
+                               bajar=lista.getSelectedIndex()+1;
+                               subir=lista.getSelectedIndex();
+
+                               if(bajar==modelo.getSize()){
+                                               JOptionPane.showMessageDialog(this,"No se puede mover hacia abajo porque es el ultimo elemento","Atencion!!!",JOptionPane.INFORMATION_MESSAGE);
+                               }else{
+                               down=modelo.getElementAt(subir);
+                               up=modelo.getElementAt(bajar);
+                               modelo.setElementAt(down,bajar);
+                               modelo.setElementAt(up,subir);
+                               lista.setSelectedIndex(bajar);
+                               }
+                }
+               
+                //Metodo Ordenar: Ordena de menor a mayor los datos del JList
+                public void Ordenar(){
+                        for(int i=0;i<modelo.getSize()-1;i++){
+                                               for(int a=i+1;a<modelo.getSize();a++){
+                                                               String objeto1=String.valueOf(modelo.getElementAt(i));
+                                                       String objeto2=String.valueOf(modelo.getElementAt(a));
+                                                       double p1=Double.parseDouble(objeto1);
+                                                               double p2=Double.parseDouble(objeto2);
+                                                                              if(p1>p2){
+                                                                                              Object temporal;
+                                                                                              temporal=modelo.getElementAt(a);
+                                                                                              modelo.setElementAt(modelo.getElementAt(i),a);
+                                                                                              modelo.setElementAt(temporal,i);       
+                                                               }                             
+                                               }
+                               }
+                }
+               
+                //Clase Calcular: Calcula los datos necesarios con los datos que estan en la JList
+                class Calcular{
+                               //Calcular la Media Aritmetica
+                               public void Media(){
+                                               double total=0;
+                                               double resultado;
+                                               Object vector[]=modelo.toArray();
+                                               String cadena[]=new String[modelo.getSize()];
+                                               double numeros[]=new double[modelo.getSize()];
+                                               //Primer for para convertir de tipo Object a String
+                                               for(int i=0;i<modelo.getSize();i++){
+                                                               cadena[i]=String.valueOf(vector[i]);
+                                               }
+                                               //Segundo for para convertir de tipo String a double
+                                               for(int b=0;b<cadena.length;b++){
+                                                               numeros[b]=Double.parseDouble(cadena[b]);
+                                               }
+                                               //Tercer for para sumar los valores del vector;
+                                               for(int c=0;c<numeros.length;c++){
+                                                               total+=numeros[c];
+                                               }
+                                               resultado=total/numeros.length;
+                                               txtmedia.setText(String.valueOf(resultado));                 
+                               }
+
+                               //Calcula la Moda, el valor que mas se repite
+                               public void Moda(){
+                                               int total=0;
+                                               double nummoda;
+                                               Object vector[]=modelo.toArray();
+                                               String cadena[]=new String[modelo.getSize()];
+                                               double numeros[]=new double[modelo.getSize()];
+                                               //Primer for para convertir de tipo Object a String
+                                               for(int i=0;i<modelo.getSize();i++){
+                                                               cadena[i]=String.valueOf(vector[i]);
+                                               }
+                                               //Segundo for para convertir de tipo String a double
+                                               for(int b=0;b<cadena.length;b++){
+                                                               numeros[b]=Double.parseDouble(cadena[b]);
+                                               }
+                                               //Recorre el vector y si halla un valor igual al primero va aumentando en 1 el contador de veces
+                                               for(int c=0;c<numeros.length;c++){
+                                                               double numero=numeros[c];
+                                                               int totalveces=0;
+                                                               for(int d=0;d<numeros.length;d++){
+                                                                              if(numero==numeros[d]){
+                                                                                              totalveces++;
+                                                                               }
+                                                               }                                                            
+                                                               if(totalveces>total){
+                                                                                              total=totalveces;
+                                                                                              txtmoda.setText("El numero "+String.valueOf(numero)+" Se Repite "+String.valueOf(total)+" Veces");
+                                                               }
+                                               }
+                               }
+                              
+                               //Calcula la Mediana, el valor del centro de la lista de datos
+                               public void Mediana(){
+                                               Object vector[]=modelo.toArray();
+                                               String cadena[]=new String[modelo.getSize()];
+                                               double numeros[]=new double[modelo.getSize()];
+                                               int posicion=0;
+                                               int division=0;
+                                               double mediana=0;
+                                               //Primer for para convertir de tipo Object a String
+                                               for(int i=0;i<modelo.getSize();i++){
+                                                               cadena[i]=String.valueOf(vector[i]);
+                                               }
+                                               //Segundo for para convertir de tipo String a double
+                                               for(int b=0;b<cadena.length;b++){
+                                                               numeros[b]=Double.parseDouble(cadena[b]);
+                                               }
+                                              
+                                               posicion=numeros.length%2;
+                                               if(posicion==0){
+                                                               division=numeros.length/2;
+                                                               mediana=(numeros[division]+numeros[division+1])/2;
+                                                               txtmediana.setText(""+String.valueOf(mediana));
+                                               }
+                                               if(posicion==1){
+                                                               division=(numeros.length+1)/2;
+                                                               txtmediana.setText(""+String.valueOf(numeros[division-1]));
+                                               }
+                               }
+                              
+                               //Metodo Cuartil 1
+                               public void Cuartil1(){
+                                               double cuartil=0.25*modelo.getSize();
+                                               double residuo=cuartil%1;
+                                               double total=0;
+                                               if(residuo>0){
+                                                               double entero=(cuartil/1)-(cuartil%1);
+                                                               total=(entero+1)*2;
+                                                               txtcuartil3.setText(String.valueOf(total));
+                                               }
+                                               if(residuo==0){
+                                                               double entero=(cuartil/1)-(cuartil%1);                                
+                                                               total=(entero+1)/2;
+                                                               txtcuartil3.setText(String.valueOf(total));
+                                               }
+                               }
+                              
+                               //Metodo Cuartil 3
+                               public void Cuartil3(){
+                                               double cuartil=0.75*modelo.getSize();
+                                               double residuo=cuartil%1;
+                                               double total=0;
+                                               if(residuo>0){
+                                                               double entero=(cuartil/1)-(cuartil%1);
+                                                               total=(entero+1)*2;
+                                                               txtcuartil1.setText(String.valueOf(total));
+                                               }
+                                               if(residuo==0){
+                                                               double entero=(cuartil/1)-(cuartil%1);                                
+                                                               total=(entero+1)/2;
+                                                               txtcuartil1.setText(String.valueOf(total));
+                                               }
+                               }
+                              
+                               //Metodo Desviacion Tipica
+                               public void DesviacionTipica(){
+                                               Object vector[]=modelo.toArray();
+                                               String cadena[]=new String[modelo.getSize()];
+                                               double numeros[]=new double[modelo.getSize()];
+                                               double radical=0;
+                                               double desviacion=0;
+                                               double desviaciontotal=0;
+                                               double total=0;
+                                               //Primer for para convertir de tipo Object a String
+                                               for(int i=0;i<modelo.getSize();i++){
+                                                               cadena[i]=String.valueOf(vector[i]);
+                                               }
+                                               //Segundo for para convertir de tipo String a double
+                                               for(int b=0;b<cadena.length;b++){
+                                                               numeros[b]=Double.parseDouble(cadena[b]);
+                                               }
+                                              
+                                               for(int c=0;c<numeros.length;c++){
+                                                               radical=(Math.pow((numeros[0]-numeros.length),2))/numeros.length;
+                                                               desviacion=Math.sqrt(radical);
+                                                               desviaciontotal+=desviacion;
+                                               }
+                                               total=desviaciontotal/numeros.length;
+                                               txtdtipica.setText(String.valueOf(total));
+                               }
+                              
+                               //Metodo Varianza
+                               public void Varianza(){
+                                               Object vector[]=modelo.toArray();
+                                               String cadena[]=new String[modelo.getSize()];
+                                               double numeros[]=new double[modelo.getSize()];
+                                               double radical=0;
+                                               double desviacion=0;
+                                               double desviaciontotal=0;
+                                               double total=0;
+                                               double var=0;
+                                               //Primer for para convertir de tipo Object a String
+                                               for(int i=0;i<modelo.getSize();i++){
+                                                               cadena[i]=String.valueOf(vector[i]);
+                                               }
+                                               //Segundo for para convertir de tipo String a double
+                                               for(int b=0;b<cadena.length;b++){
+                                                               numeros[b]=Double.parseDouble(cadena[b]);
+                                               }
+                                              
+                                               for(int c=0;c<numeros.length;c++){
+                                                               radical=(Math.pow((numeros[0]-numeros.length),2))/numeros.length;
+                                                               desviacion=Math.sqrt(radical);
+                                                               desviaciontotal+=desviacion;
+                                               }
+                                               total=desviaciontotal/numeros.length;
+                                               var=Math.sqrt(total);
+                                               txtvarianza.setText(String.valueOf(var));
+                                              
+                               }
+                              
+                }//Fin de la clase Calcular
+               
+               
+                                               public static void main(String []args){
+                                                               new claseTablafrecuencia();
+                                               }
+
+
+
+
+}
