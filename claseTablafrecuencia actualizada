@@ -1,0 +1,158 @@
+package calculadorstadistico;
+
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class TablafrecuenciaNumerica {
+	
+	static ArrayList<Integer>Dnumericos = new ArrayList<Integer>();
+	
+public static void main(String args[]) {
+	
+	boolean limitante = true;
+	
+	int numeroIntervalo;
+	
+	float addnumero;
+	
+	String salida = "INTERVALO \t\t M \t\t f \t\t F \t\t fr \t\t f% \n";
+	
+	
+	ArrayList<Float>Dnumericos = new ArrayList<Float>();
+	
+	ArrayList<Float>Dnumericos2 = new ArrayList<Float>();
+	
+	ArrayList<Float>Intervalo = new ArrayList<Float>();
+	
+	ArrayList<Float>frecuencia = new ArrayList<Float>();
+	
+	ArrayList<Float>marcas = new ArrayList<Float>();
+	
+	Intervalo.add((float) 1.0);
+//******************numerador es un dato que apunta al indice del arraylis*****************************//
+	                      int numerador = 1;
+	                      int Dterminador_igualdad = 0;
+                          	
+	do {
+		
+		
+	   	int option = 1;
+
+		try {  
+		
+			addnumero = Float.parseFloat(JOptionPane.showInputDialog("digite el termino:"+(numerador)));
+			
+		    }catch(NumberFormatException e) 
+		     {
+		       JOptionPane.showMessageDialog(null, "has introducido letras --> este campo se tomara como un Cero ");	
+		
+		       addnumero = 0;
+		     }
+		
+		    Dnumericos.add( addnumero );
+		    numerador++;
+		    
+		        
+		  option = Integer.parseInt(JOptionPane.showInputDialog(" si desea ingresar otro dato a la tabla digite 1 \t de lo contrario dijite 0"));
+		  
+		  if (option == 0)
+		  limitante  = false;
+		  
+	}while (limitante != false);
+	
+		  
+	 
+	numeroIntervalo = Integer.parseInt(JOptionPane.showInputDialog("Digite el numero de intervalos de la tabla"));
+	
+	
+	///*********ordenamiento de Arraylist****************//
+	
+	Collections.sort(Dnumericos);
+	
+	//***************************************************//
+	
+	float primerTermino = Dnumericos.get(0);
+	
+	float ultimotermino = Dnumericos.get((Dnumericos.size() - 1));
+
+	float Amplitud = ((ultimotermino - primerTermino)/numeroIntervalo);
+  	
+	int indicador =0;
+	
+	float Intervalo_tabla[] = new float [Dnumericos.size()];
+
+	float Controlador_igualdad = 0;
+	
+	
+	 for (int i = 0; i <= ( Dnumericos.size()-1); i++) {
+	 
+		 Dnumericos2.add(Dnumericos.get(i));
+	 }
+	 
+	 
+	
+	  for (int i = 0; i <= ( Dnumericos.size()-1); i++) {
+		  
+		  int x =  Dnumericos2.size()-1;
+		  float cambio = -1;
+		    
+		  for (int a = 0; a <= (x); a++) {
+			  float num1 =Dnumericos.get(i);
+			 float num2 = Dnumericos2.get(a);
+	    	
+	    	if( num1 == num2) {
+	        
+	    		
+	    		 Controlador_igualdad ++;
+	    	
+	    		System.out.println(i+"---llll--llll----"+a);
+	    		
+	    		Dnumericos2.set(a, cambio);
+	    		
+	        }
+	    	System.out.println("iteracion"+"**"+i+Dnumericos.get(i)+"----*"+"**"+a+Dnumericos2.get(a));
+	    	System.out.println("iteracion");
+		  }
+ 		 if (Controlador_igualdad > 0) {
+ 		Intervalo.add(Dnumericos.get(i));
+ 		frecuencia.add(Controlador_igualdad);
+		System.out.println("****************");
+ 		
+ 		 }
+ 		Controlador_igualdad = 0;
+ 	
+	     }
+	
+	
+	  for(int i = 0; i< Intervalo.size(); i++) {
+		  
+		  int num1 = 0;
+		  int num2 = 0;
+		  
+		  
+				  
+		  for (int b = 0; b < numeroIntervalo;b++) {
+			  
+			  
+		  }
+		  
+	  }
+	  
+	for(int z = 0; z <= (frecuencia.size()-1) ; z++ ) {
+		
+		salida += frecuencia.get(z)+"\n";
+		
+		//salida += frecuencia[z]+"\n";
+	}
+		
+	JTextArea imp= new JTextArea();
+	
+	imp.setText(salida);
+	
+	JOptionPane.showMessageDialog(null, imp);
+	
+	System.exit(0);
+ }
+
+}
